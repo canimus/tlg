@@ -1,0 +1,18 @@
+<div id="products">
+  <h1>Products</h1>
+  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+  <%= render 'products' %>
+  </table>
+  <%= paginate @products, :window => 2 %>
+  
+</div>
+<%= link_to 'New', new_product_path, :class => 'btn btn-primary' %>

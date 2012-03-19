@@ -1,0 +1,2 @@
+$("#products table tbody").replaceWith("<%= escape_javascript(render("products"))%>");
+$("div.pagination").replaceWith("<%= escape_javascript(paginate @products, :window => 2) %>");
