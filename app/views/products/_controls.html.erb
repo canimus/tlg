@@ -1,0 +1,75 @@
+<div class="well">
+  <h3>View format</h3>
+  <label>Change the view layout </label>
+  <p>
+    <div class="btn-group" data-toggle="buttons-radio">
+      <%= link_to(products_path(:view_layout => 'thumbnail'), :class => layout_view?('thumbnail')) do %>
+        <i class="icon-th-large"></i> Thumbnail
+      <% end %>
+      <%= link_to(products_path(:view_layout => 'list'), :class => layout_view?('list')) do %>
+          <i class="icon-list"></i> List
+      <% end %>
+      <%= link_to(products_path(:view_layout => 'carrousel'), :class => layout_view?('carrousel')) do %>
+        <i class="icon-film"></i> Carrousel
+      <% end %>
+    </div>  
+  </p>
+  <label>Change products per page</label>
+  <p>
+    <div class="btn-group" data-toggle="buttons-radio">
+      <%= link_to(products_path(:page_size => 4), :class => page_per_view?(4)) do %>
+        4
+      <% end %>
+      <%= link_to(products_path(:page_size => 8), :class => page_per_view?(8)) do %>
+        8
+      <% end %>
+      <%= link_to(products_path(:page_size => 12), :class => page_per_view?(12)) do %>
+        12
+      <% end %>
+    </div>  
+  </p>
+ <hr/>
+  <%= form_tag products_path, :method => :get do %>
+    <h3>Filter by name</h3>
+    <label>Enter a product name:</label>
+    <input type="text" class="input-medium" name="product" placeholder="Name">
+    <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
+    <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
+    <button type="submit" class="btn">Filter</button>
+  <% end %>
+  <% unless session[:filter].blank? %>
+    <%= form_tag products_path, :method => :get, :class => "clear_filter_form" do %>
+      <input type="hidden" value="" name="remove_filter" id="remove_filter"/>
+      <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
+      <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
+      <% session[:filter].each_with_index do |current_filter, position| %>
+        <%= content_tag(:span, "#{current_filter}", :class => "label label-info", :onclick => "window.remove_filter(this)" ) %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <hr/>
+  <%= form_tag products_path, :method => :get, :class => "clear_filter_form" do %>
+    <h3>Filter by price</h3>
+    <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
+    <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
+    <input type="hidden" value="<%= session[:price]%>" name="price" id="price"/>
+    
+    <p>
+      <label for="amount">Enter price range:</label>
+      <% unless session[:price].blank? %>
+        <a href="/products">
+        <%= content_tag(:span, "0 - 500", :class => "label label-info", :id => "amount" ) %>
+        </a>
+      <% end %>
+    </p>
+    <div id="slider-range"></div>
+    <script>
+      window.setup_slider(<%=session[:price_base].begin%>, <%=session[:price_base].end%>, <%=session[:price].begin%>, <%=session[:price].end%>)
+    </script>
+    <button type="submit" class="btn pull-left" style="clear:both">Filter</button>
+    <br/>
+  <% end %>
+  <%= content_tag :hr unless session[:filter].blank? %>
+  <%= link_to "Clear All", products_path(:view_layout => session[:view_layout], :clear_all => true), :class => "btn btn-warning" unless session[:filter].blank? or session[:price].blank?%>
+</div>
+
