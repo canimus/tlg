@@ -13,14 +13,39 @@ window.prepare_products = ->
    $(".pagination a").click = ->
      $.get(this.href, null, null, 'script')
      return false
+     
+   $("span.label-info").css("cursor", "pointer")
+   $(".tabs").button()
+   $("input[name=product]").focus()
+
+window.dangerClose = ->
+  $("#danger-confirm").hide()
+  $("tbody tr td .btn-danger").removeClass("disabled").show()
+  return false
   
-window.dangerConfirm = (product_id, product_name) ->
-  $(".btn-danger").addClass("disabled").hide()
-  $("h1").parent().prepend('<div class="alert alert-error" id="danger-confirm" style="display: none">
-                            <a class="close" data-dismiss="alert">×</a>
-                            <h4 class="alert-heading">'+product_name+' will be gone!</h4>
-                            <p id="danger-msg"></p>                            
-                            <a class="btn btn-danger" href="/products/'+product_id+'" data-method="delete">Proceed</a> 
-                            <a class="btn" href="#" data-dismiss="alert">Cancel</a>
-                            </div>')
-  $("#danger-confirm").fadeIn().children("#danger-msg").html("What you are about to do is irreversible and your product will be permanently removed");
+window.dangerConfirm = (product_path, product_name) ->
+  $("#danger-confirm").fadeIn()
+  $("tbody tr td .btn-danger").addClass("disabled").hide()
+  $("#danger-confirm h4 span").text(product_name)
+  $("#danger-confirm a[data-method=delete]").attr("href", product_path)
+  
+window.remove_filter = (filter_tag) ->
+  $("#remove_filter").val($(filter_tag).text())
+  parent_form=$(filter_tag).parent("form")
+  $(filter_tag).remove()
+  parent_form.submit()
+
+window.setup_slider = (min_value,max_value, current_min, current_max) ->
+  $( "#slider-range" ).slider({
+    range: true,
+  	animate: true,
+  	min: min_value,
+  	max: max_value,
+  	values: [ current_min,  current_max ],
+  	slide: (event,ui) -> 
+  	  $("#amount" ).text( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] )
+  	  $("#price").val(ui.values[ 0 ] + ".." + ui.values[ 1 ])
+    })
+  			
+  $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) )
+  

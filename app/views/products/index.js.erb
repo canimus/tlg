@@ -1,2 +1,10 @@
-$("#products table tbody").replaceWith("<%= escape_javascript(render("products"))%>");
+<% case session[:view_layout]
+    when "list"
+%>
+$("#products table").replaceWith("<%= escape_javascript(render("products"))%>");
+<%
+  when "thumbnail"
+%>
+$("#products ul").replaceWith("<%= escape_javascript(render("thumbnails"))%>");
+<% end %>
 $("div.pagination").replaceWith("<%= escape_javascript(paginate @products, :window => 2) %>");

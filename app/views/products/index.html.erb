@@ -1,18 +1,20 @@
 <div id="products">
-  <h1>Products</h1>
+  <%= render 'remove' %>
+  <h1>
+    Catalog
+    <%= content_tag(:small, "Filtered" ) unless session[:filter].blank? %>
+  </h1>
   
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-  <%= render 'products' %>
-  </table>
-  <%= paginate @products, :window => 2 %>
-  
+  <% if @products.count > 0 %>
+    <%= render 'products' if session[:view_layout]=='list' %>
+    <%= render 'thumbnails' if session[:view_layout]=='thumbnail' %>
+    <%= paginate @products, :window => 2 %>
+  <% else %>
+    <div class="alert alert-info">
+      <strong>Nothing found!</strong>
+      <p>We couldn't found any product with such criteria</p>
+    </div>
+  <% end %>
 </div>
-<%= link_to 'New', new_product_path, :class => 'btn btn-primary' %>
+<%= link_to  'New Product', new_product_path, :class => 'btn btn-primary' %>
+<p>&nbsp;</p>

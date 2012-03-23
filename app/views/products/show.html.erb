@@ -15,6 +15,7 @@
     <li class="active"><%= @product.name %></li>
   </ul>  
 </div>
+<%= render 'remove' %>
 <div>
   <h1><%= @product.name %></h1>
   <p>
@@ -26,5 +27,5 @@
 <div class="form-actions">
   <%= link_to 'Back', products_path, :class => 'btn'  %>
   <%= link_to 'Edit', edit_product_path(@product), :class => 'btn' %>
-  <%= link_to 'Delete', '#', :class => 'btn btn-danger', :onclick => "dangerConfirm(#{@product.id},'#{@product.name}')" %>
+  <%= link_to 'Delete', '#', :class => 'btn btn-danger', :onclick => "dangerConfirm('#{product_path(@product)}','#{@product.name}')" %>
 </div>

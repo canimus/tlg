@@ -1,4 +1,12 @@
-
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
   <tbody>
     <% @products.each do |product| %>
       <tr>
@@ -7,8 +15,9 @@
         <td><%= product.price %></td>
         <td>
           <%= link_to 'Edit', edit_product_path(product), :class => 'btn btn-mini' %>
-          <%= link_to 'Delete', '#', :class => 'btn btn-mini btn-danger', :onclick => "dangerConfirm(#{product.id},'#{product.name}')" %>
+          <%= link_to 'Delete', '#', :class => 'btn btn-mini btn-danger', :onclick => "dangerConfirm('#{product_path(product)}','#{product.name}')" %>
         </td>
       </tr>
     <% end %>
   </tbody>
+  </table>

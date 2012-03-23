@@ -1,10 +1,21 @@
 class ProductsController < ApplicationController
-  # GET /products
-  # GET /products.json
+  DEFAULT_VIEW="thumbnail"
+  DEFAULT_PER_PAGE=8
+  
   def index
-    @products = Product.page(params[:page]).per(5)
-  end
+    # Enable rendering of controls partial for products
+    @control = true
+    
+    # Handling View Layout 
+    select_view
+    
+    # Handling Items per page
+    select_page_size
 
+    @products = Product.where(apply_name_filter).where(apply_price_filter).page(params[:page]).per(session[:page_size])
+    
+  end 
+  
   # GET /products/1
   # GET /products/1.json
   def show
@@ -75,4 +86,62 @@ class ProductsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  # Start of private methods
+  private
+  
+  def select_view
+    session[:view_layout] = params[:view_layout] unless params[:view_layout].blank?
+    session[:view_layout] = DEFAULT_VIEW if session[:view_layout].blank?
+  end
+  
+  def select_page_size()
+    session[:page_size] = params[:page_size] unless params[:page_size].blank? 
+    session[:page_size] = DEFAULT_PER_PAGE if session[:page_size].blank?
+  end
+  
+  def apply_name_filter
+    
+    #Initialization of session filter if not defined yet
+    session[:filter] ||= []
+    
+    # Get filters from params and add it to session
+    unless params[:product].blank?
+      # Handling addition of new tags 
+      session[:filter] << params[:product]
+      session[:filter].uniq!
+    end
+    
+    # If operation include clear filters remove all filters
+    session[:filter] = [] if params[:clear_all]=="true"
+    
+    # Remove specific filter
+    unless params[:remove_filter].blank?
+      session[:filter].delete_if { |filter| filter==params[:remove_filter] }
+    end
+    
+    # Build query
+    query=[session[:filter].map {|x| "name like ?"}.join(" or ")]
+    session[:filter].each {|x| query<<"%#{x}%" }
+    
+    # Return the query string to be passed to the model
+    query
+    
+  end
+  
+  def apply_price_filter
+    
+    #Initialization of session filter if not defined yet
+    session[:price_base] ||= Range.new(Product.minimum(:price).to_f, Product.maximum(:price).to_f)
+    session[:price] = session[:price_base]
+    unless params[:price].blank?
+      price_range = params[:price].split("..")
+      logger.debug price_range
+      session[:price] = Range.new(price_range[0].to_s,price_range[1])
+    end
+    
+    query = {:price => session[:price]}
+  end
+  
+  
 end
