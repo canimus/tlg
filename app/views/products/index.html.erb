@@ -4,10 +4,12 @@
     Catalog
     <%= content_tag(:small, "Filtered" ) unless session[:filter].blank? %>
   </h1>
+  <br/>
   
   <% if @products.count > 0 %>
     <%= render 'products' if session[:view_layout]=='list' %>
     <%= render 'thumbnails' if session[:view_layout]=='thumbnail' %>
+    <%= render 'carrousel' if session[:view_layout]=='carrousel' %>
     <%= paginate @products, :window => 2 %>
   <% else %>
     <div class="alert alert-info">

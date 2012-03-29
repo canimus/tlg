@@ -1,0 +1,40 @@
+<div id="carousel" class="carousel">
+  <!-- Carousel items -->
+  <div class="carousel-inner">
+    <% @products.each do |product| %>
+      <div class="item">
+          <%= link_to(product_path(product)) do %>
+            <img src="http://placehold.it/400x400" alt="">
+          <% end %>
+          <div class="carousel-caption">
+            <h4><%= product.name %></h4>
+            <p>
+              <%= product.price %>
+            </p>
+          </div>
+      </div>
+    <% end %>
+  </div>
+  <!-- Carousel nav -->
+  <a class="carousel-control left" href="#carousel" data-slide="prev">&lsaquo;</a>
+  <a class="carousel-control right" href="#carousel" data-slide="next">&rsaquo;</a>
+</div>
+<table class="table table-stripped">
+<thead>
+  <tr>
+    <th>Description</th>
+    <th>Weight</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>My product</td>
+    <td>900.99 Kg.</td>
+  </tr>
+</tbody>
+</table>
+<script>
+ $(document).ready(function() {
+   $('.carousel div.item').eq(0).addClass('active');
+ });
+</script>

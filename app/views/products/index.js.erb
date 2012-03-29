@@ -6,5 +6,9 @@ $("#products table").replaceWith("<%= escape_javascript(render("products"))%>");
   when "thumbnail"
 %>
 $("#products ul").replaceWith("<%= escape_javascript(render("thumbnails"))%>");
+<%
+  when "carrousel"
+%>
+$("#carousel").replaceWith("<%= escape_javascript(render("carrousel"))%>");
 <% end %>
 $("div.pagination").replaceWith("<%= escape_javascript(paginate @products, :window => 2) %>");
