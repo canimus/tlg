@@ -141,6 +141,7 @@ class ProductsController < ApplicationController
     end
     
     query = {:price => session[:price]}
+    query
   end
   
   
