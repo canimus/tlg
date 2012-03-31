@@ -50,11 +50,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        unless session[:price_base].blank?
-          if @product.price > session[:price_base].end
-            session[:price_base] = Range.new(0,@product.price.to_f)
-          end
-        end
+        recalculate_top_price
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render json: @product, status: :created, location: @product }
       else
@@ -71,6 +67,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.update_attributes(params[:product])
+        recalculate_top_price
         format.html { redirect_to @product, notice: 'Product was successfully updated.' }
         format.json { head :no_content }
       else
@@ -85,6 +82,7 @@ class ProductsController < ApplicationController
   def destroy
     @product = Product.find(params[:id])
     @product.destroy
+    recalculate_top_price
 
     respond_to do |format|
       format.html { redirect_to products_url }
@@ -137,7 +135,7 @@ class ProductsController < ApplicationController
   def apply_price_filter
     
     #Initialization of session filter if not defined yet
-    session[:price_base] ||= Range.new(0, Product.maximum(:price).to_f)
+    session[:price_base] = Range.new(0, Product.maximum(:price).to_f)
     session[:price] = session[:price_base]
     unless params[:price].blank?
       price_range = params[:price].split("..")
@@ -148,5 +146,10 @@ class ProductsController < ApplicationController
     query
   end
   
+  def recalculate_top_price
+    if @product.price > session[:price_base].end
+      session[:price_base] = Range.new(0,@product.price.to_f)
+    end
+  end
   
 end

@@ -6,7 +6,7 @@
           <img src="http://placehold.it/260x180" alt="">
         <% end %>
         <div class="caption">
-          <h5><%= product.name %></h5>
+          <h5><%= truncate(product.name, :length => 22) %></h5>
           <p><span class="label label-inverse" style="background-color: black !important">$ <%= product.price %></span></p>
           <hr/>
           <p>
