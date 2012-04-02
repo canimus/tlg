@@ -4,7 +4,7 @@ describe "Products" do
   describe "GET /products" do
     it "it displays products" do
       visit products_path
-      page.should have_content("Catalog")
+      page.should have_content("Products")
     end
   end
 
@@ -33,6 +33,6 @@ feature "Delete product" do
   scenario "Deleting product from product catalog" do
     visit products_path
     click_link("Delete")
-    print page.html
+    #print page.html
   end
 end
