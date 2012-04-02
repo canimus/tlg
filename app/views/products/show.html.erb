@@ -17,59 +17,57 @@
 </div>
 <%= render 'remove' %>
 <div class="row">
-  
-  <section class="span6">
+  <section class="span8">
     <div class="page-header">
       <h1>
-      <%= @product.name %>
+        <%= @product.name %>
       </h1>
     </div>
+    <br/>
     <div class="row">
-      <div class="span3">
-        <h3>Price</h3>
-        <p>$ 399.22</p>
-      </div>
-      <div class="span3">
+
+      <div class="span3"> <!-- Start of Prices -->
+        <img src="http://placehold.it/260x180" alt="">
+      </div> <!-- End of Prices -->
+
+      <div class="span4">
+        <h3>Description</h3>
         <p>
-          <h3>Stores</h3>        
-          <adress>
-            175 Curtner Avenue<br/>
-            San Jose, CA<br/>
-            United States<br/>
-          </adress>
-          <a href="#">Map</a>
+          <%= @product.description %>  
         </p>
       </div>
     </div>
-    <p>
-      <h3>Description</h3>
-      <%= @product.description %>
-    </p>
+    <div class="row">  
+      <div class="span3"> <!-- Start of Prices -->
+        <h3>Price</h3>
+        <p>$ 399.22</p>
+      </div> <!-- End of Prices -->
+      <div class="span2"> <!-- Start of Stores -->
+        <h3>Stores</h3>        
+        <adress>
+          175 Curtner Avenue<br/>
+          San Jose, CA<br/>
+          United States<br/>
+        </adress>
+        <a href="#">Map</a>
+      </div> <!-- End of Stores -->
+      <div class="span2">
+        <h3>Tags</h3>
+        <ul class="nav">
+          <% @product.tags.each do |tag| %>
+            <li><a href="#"><i class="icon-tag"></i> <%= tag %></a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
     <div class="form-actions">
       <%= link_to 'Back', products_path, :class => 'btn'  %>
       <%= link_to 'Edit', edit_product_path(@product), :class => 'btn' %>
       <%= link_to 'Delete', '#', :class => 'btn btn-danger', :onclick => "dangerConfirm('#{product_path(@product)}','#{@product.name}')" %>
     </div>
   </section>
-  <aside class="span2">
-    <div class="well" style="padding: 8px 0;">
-      <ul class="nav nav-list">
-        <li class="nav-header">Information</li>
-        <li class="active"><a href="#"><i class="icon-pencil icon-white"></i> Product</a></li>
-        <li><a href="#"><i class="icon-star"></i> Price</a></li>
-        <li><a href="#"><i class="icon-map-marker"></i> Store</a></li>
-        <li><a href="#"><i class="icon-picture"></i> Image</a></li>
-        <li><a href="#"><i class="icon-tags"></i> Tags</a></li>
-        <li class="nav-header">Stock</li>
-        <li><a href="#"><i class="icon-th"></i> Quantity</a></li>
-        <li><a href="#"><i class="icon-barcode"></i> BAR-code</a></li>
-        <li><a href="#"><i class="icon-qrcode"></i> QR-code</a></li>
-        <li class="nav-header">Marketing</li>
-        <li><a href="#"><i class="icon-flag"></i> Campaign</a></li>
-        <li><a href="#"><i class="icon-facetime-video"></i> Promotions</a></li>
-      </ul>
-    </div>
-  </aside>
+
 </div>
 
 

@@ -31,15 +31,15 @@
  <hr/>
   <%= form_tag products_path, :method => :get do %>
     <h3>Filter by name</h3>
-    <label>Enter a product name:</label>
+    <label for="product">Enter a product name:</label>
     <input type="text" class="input-medium" name="product" placeholder="Name">
     <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
     <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
     <button type="submit" class="btn">Filter</button>
   <% end %>
-  <% unless session[:filter].blank? %>
+  <% unless session[:tags].blank? %>
     <%= form_tag products_path, :method => :get, :class => "clear_filter_form" do %>
-      <input type="hidden" value="" name="remove_filter" id="remove_filter"/>
+      <input type="hidden" value="" name="remove_tag" id="remove_tag"/>
       <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
       <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
       <% session[:filter].each_with_index do |current_filter, position| %>
@@ -47,6 +47,25 @@
       <% end %>
     <% end %>
   <% end %>
+  <hr/>
+    <%= form_tag products_path, :method => :get do %>
+      <h3>Filter by tags</h3>
+      <label for="product">Enter a tag name:</label>
+      <input type="text" class="input-medium" name="product" placeholder="Tag">
+      <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
+      <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
+      <button type="submit" class="btn">Filter</button>
+    <% end %>
+    <% unless session[:filter].blank? %>
+      <%= form_tag products_path, :method => :get, :class => "clear_filter_form" do %>
+        <input type="hidden" value="" name="remove_filter" id="remove_filter"/>
+        <input type="hidden" value="<%= session[:view_layout]%>" name="view_layout" id="view_layout"/>
+        <input type="hidden" value="<%= session[:page_size]%>" name="page_size" id="page_size"/>
+        <% session[:filter].each_with_index do |current_filter, position| %>
+          <%= content_tag(:span, "#{current_filter}", :class => "label label-info", :onclick => "window.remove_filter(this)" ) %>
+        <% end %>
+      <% end %>
+    <% end %>
   <hr/>
   <%= form_tag products_path, :method => :get, :class => "clear_filter_form" do %>
     <h3>Filter by price</h3>

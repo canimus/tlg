@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
     @control = true
     
     # Handling View Layout 
-    select_view
+    session[:view_layout] = params[:view_layout] || session[:view_layout] || DEFAULT_VIEW
     
     # Handling Items per page
     select_page_size
@@ -20,6 +20,9 @@ class ProductsController < ApplicationController
   # GET /products/1.json
   def show
     @product = Product.find(params[:id])
+    
+    # Enable the display of navigation elements
+    @navigation = true
 
     respond_to do |format|
       format.html # show.html.erb
@@ -92,12 +95,7 @@ class ProductsController < ApplicationController
   
   # Start of private methods
   private
-  
-  def select_view
-    session[:view_layout] = params[:view_layout] unless params[:view_layout].blank?
-    session[:view_layout] = DEFAULT_VIEW if session[:view_layout].blank?
-  end
-  
+    
   def select_page_size()
     session[:page_size] = params[:page_size] unless params[:page_size].blank? 
     session[:page_size] = DEFAULT_PER_PAGE if session[:page_size].blank?

@@ -1,0 +1,26 @@
+one:
+  id: 1
+  place: 175 Curtner Avenue
+  location: San Jose, CA
+  country: United States
+  postcode: 4455 AA
+  store_id: 1
+  
+two:
+  id: 2
+  place: C/Jose Luis Navarro Campello 1
+  location: Elche, Alicante
+  country: Spain
+  postcode: 03202
+  store_id: 2
+
+three:
+  id: 3
+  place: Antonio Caso #26
+  location: Xalapa, Veracruz
+  country: Mexico
+  postcode: 91070
+  store_id: 3
+
+
+  

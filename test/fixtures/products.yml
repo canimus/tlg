@@ -1,9 +1,19 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
-  name: MyString
-  price: 9.99
+  id: 1
+  name: GoPro Hero2 HD Camera
+  price: 399.99
+  description: Unique camera special for sports footage. It includes various fixtures to attach the camera to sport gear like helmets or frames. It has full HD capacity with 1080p and stability control. Lightweight and portable it can be used under water as well.
 
 two:
-  name: MyString
-  price: 9.99
+  id: 2
+  name: Trek Fuel EX 8
+  price: 2599.99
+  description: Trek is the world leader in mountain bike technology. No surprise that our mountain bikes are the most technologically advanced on the market. Each platform leads its class, and every model is loaded with features and details that will make any ride, on any trail, better.
+
+three:
+  id: 3
+  name: Bontrager Tires 29"
+  price: 129.89
+  description: The World's Fastest Tire combines the aerodynamics and low rolling resistance of the R4 tire with a new streamlined profile saving you 9+ seconds over the next fastest tire in a 10k time trial.

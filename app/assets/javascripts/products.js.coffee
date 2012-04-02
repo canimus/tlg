@@ -48,4 +48,6 @@ window.setup_slider = (min_value,max_value, current_min, current_max) ->
     })
   			
   $( "#amount" ).text( "$" + $( "#slider-range" ).slider( "values", 0 ) + " - $" + $( "#slider-range" ).slider( "values", 1 ) )
-  
+
+window.product_event = (product_item) ->
+  alert(product_item)
